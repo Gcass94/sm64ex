@@ -130,6 +130,25 @@ void send_display_list(struct SPTask *spTask) {
 #define SAMPLES_LOW 528
 #endif
 
+static inline void patch_interpolations(void) {
+    extern void mtx_patch_interpolated(void);
+    extern void patch_screen_transition_interpolated(void);
+    extern void patch_title_screen_scales(void);
+    extern void patch_interpolated_dialog(void);
+    extern void patch_interpolated_hud(void);
+    extern void patch_interpolated_paintings(void);
+    extern void patch_interpolated_bubble_particles(void);
+    extern void patch_interpolated_snow_particles(void);
+    mtx_patch_interpolated();
+    patch_screen_transition_interpolated();
+    patch_title_screen_scales();
+    patch_interpolated_dialog();
+    patch_interpolated_hud();
+    patch_interpolated_paintings();
+    patch_interpolated_bubble_particles();
+    patch_interpolated_snow_particles();
+}
+
 void produce_one_frame(void) {
     gfx_start_frame();
 
@@ -145,6 +164,11 @@ void produce_one_frame(void) {
 
     thread6_rumble_loop(NULL);
 
+    gfx_end_frame();
+
+    gfx_start_frame();
+    patch_interpolations();
+    send_display_list(gGfxSPTask);
     gfx_end_frame();
 }
 
@@ -163,8 +187,7 @@ void* audio_thread() {
         set_sequence_player_volume(SEQ_PLAYER_SFX, (f32)configSfxVolume / 127.0f * master_mod);
         set_sequence_player_volume(SEQ_PLAYER_ENV, (f32)configEnvVolume / 127.0f * master_mod);
 
-        int samples_left = audio_api->buffered() - (audio_api->get_desired_buffered() * configAudioRunahead);
-        if (samples_left < 0) samples_left = 0;
+        int samples_left = audio_api->buffered();
         u32 num_audio_samples = samples_left < audio_api->get_desired_buffered() ? SAMPLES_HIGH : SAMPLES_LOW;
         // printf("Audio samples: %d %u\n", samples_left, num_audio_samples);
         s16 audio_buffer[SAMPLES_HIGH * 2];
@@ -192,7 +215,7 @@ void* audio_thread() {
         end_time = sys_profile_time();
 
         // Sleep for the remaining time
-        f64 nap_time = (frametime_micro - (end_time - start_time)) * configAudioSleep;
+        f64 nap_time = frametime_micro - (end_time - start_time);
         // printf("Audio thread nap time: %f\n", nap_time);
         if (nap_time > 0.0) sys_sleep(nap_time);
 
