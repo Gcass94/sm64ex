@@ -1,6 +1,6 @@
 # Features in this fork
 
-* The inverted Y-axis can now be disabed in the camera menu
+* The inverted Y-axis can now be disabed in the camera menu (Credit to @ineedhelpbad for the fix)
 * Free camera controls are enabled in the 3 Bowser levels
 * The 60fps patch has been pre-applied; no need to apply patch (Can still disable with tools/revert_patch.sh)
 * BETTERCAMERA, NODRAWINGDISTANCE, and EXTERNAL_DATA have now been enabled by default; no need to specify when making file (Can still disable with "make BETTERCAMERA=0", etc.)
