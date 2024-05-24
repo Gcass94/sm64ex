@@ -37,10 +37,10 @@ NO_PIE ?= 1
 TARGET_ARCH ?= native
 TARGET_BITS ?= 0
 
-# Disable better camera by default
-BETTERCAMERA ?= 0
-# Disable no drawing distance by default
-NODRAWINGDISTANCE ?= 0
+# Enable better camera by default
+BETTERCAMERA ?= 1
+# Enable no drawing distance by default
+NODRAWINGDISTANCE ?= 1
 # Disable texture fixes by default (helps with them purists)
 TEXTURE_FIX ?= 0
 # Enable extended options menu by default
@@ -48,7 +48,7 @@ EXT_OPTIONS_MENU ?= 1
 # Disable text-based save-files by default
 TEXTSAVES ?= 0
 # Load resources from external files
-EXTERNAL_DATA ?= 0
+EXTERNAL_DATA ?= 1
 # Enable Discord Rich Presence
 DISCORDRPC ?= 0
 
