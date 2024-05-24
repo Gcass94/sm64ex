@@ -4,6 +4,7 @@
 * Free camera controls are enabled in the 3 Bowser levels
 * The 60fps patch has been pre-applied; no need to apply patch (Can still disable with tools/revert_patch.sh)
 * BETTERCAMERA, NODRAWINGDISTANCE, and EXTERNAL_DATA have now been enabled by default; no need to specify when making file (Can still disable with "make BETTERCAMERA=0", etc.)
+* Enabled free camera with optimal settings from the start of the game (Can still be changed in the pause menu)
 
 # sm64ex
 Fork of [sm64-port/sm64-port](https://github.com/sm64-port/sm64-port) with additional features. 
